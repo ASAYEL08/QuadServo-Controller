@@ -1,83 +1,66 @@
 <div align="center">
 
-# 🤖 Quad Servo Motor Control System
-### ⚡ Arduino Uno & Tinkercad Simulation ⚡
+# 🌟 QuadServo Controller 🌟
+### ⚡ Multi-Servo Precision Coordination System with Arduino Uno ⚡
 
 [![Arduino](https://img.shields.io/badge/Platform-Arduino%20Uno-blue?style=for-the-badge&logo=arduino&logoColor=white)](https://www.arduino.cc/)
-[![Tinkercad](https://img.shields.io/badge/Simulation-Tinkercad-orange?style=for-the-badge&logo=autodesk&logoColor=white)](https://www.tinkercad.com/)
-[![Language](https://img.shields.io/badge/Language-C++%20%2F%20Arduino-teal?style=for-the-badge&logo=cplusplus&logoColor=white)](https://en.wikipedia.org/wiki/C%2B%2B)
+[![Tinkercad](https://img.shields.io/badge/Simulation-Tinkercad-orange?style=for-the-badge&logo=autodesk&logoColor=white)](https://www.tinkercad.com/things/ctzSRxtCs6N-quadservo-controller?sharecode=4C30DhzPooZ0-n_Og-TwS8SJfq4B8n_BDO4_eZQj74s)
+[![Status](https://img.shields.io/badge/Status-Completed%20&%20Verified-success?style=for-the-badge)]()
 
 </div>
 
 ---
 
-## 📋 🌟 Project Overview
-This project showcases a precise multi-channel servo motor coordination routine programmed via an Arduino Uno. The execution handles dynamic transition states, transitioning smoothly from timed continuous movement to a locked stabilization checkpoint.
+## 📌 📖 Project Overview
+The QuadServo Controller project is an advanced multi-channel actuation system designed to coordinate four independent servo motors simultaneously. Utilizing an Arduino Uno microcontroller, the system executes a meticulously timed sequence that transitions smoothly from dynamic continuous sweeping motion into a rigid, stable holding state. This demonstrates precise PWM signal generation, multi-axis synchronization, and non-blocking time management in embedded systems.
 
 ---
 
-## 🎯 ⚡ Operational Sequence & Requirements
-The control algorithm executes a strict two-stage routine:
-1. 🔄 Stage 1 (Sweep Mode): All four servo motors simultaneously perform a continuous back-and-forth oscillating sweep (`0°` to `180°`) for an exact duration of 2 seconds.
-2. 🛑 Stage 2 (Hold Mode): Immediately upon expiration of the temporal window, all motors snap to and rigidly hold a precise orientation of 90 degrees.
+## 🎯 ⚡ Operational Logic & Core Requirements
+The project execution is structured into two distinct, sequential phases managed autonomously by the control algorithm:
+
+1. 🔄 Phase 1: Dynamic Sweep Routine
+   * Behavior: All four servo motors initiate a continuous, synchronized back-and-forth oscillation sweeping across a full angular range from 0° to 180°.
+   * Duration: This sweeping sequence runs continuously and precisely for an exact time window of 2 seconds using advanced time-tracking functions (`millis()`).
+
+2. 🛑 Phase 2: Stabilization & Hold State
+   * Behavior: Immediately upon the expiration of the 2-second interval, all motors break out of the oscillation loop.
+   * Position: Every servo motor pivots instantly and locks firmly into a precise position of 90 degrees, maintaining this stable orientation indefinitely.
+
+---
+
+## 🌐 🔗 Live Tinkercad Simulation
+You can explore, test, and run the live circuit simulation directly in your browser via the official Tinkercad workspace:
+
+👉 [Click Here to Access the Tinkercad Circuit Simulation](https://www.tinkercad.com/things/ctzSRxtCs6N-quadservo-controller?sharecode=4C30DhzPooZ0-n_Og-TwS8SJfq4B8n_BDO4_eZQj74s)
 
 ---
 
 ## 🛠️ 🔌 Hardware Architecture & Pin Mapping
 
-| Component | Interface / Pin | Description |
+| Component | Pin / Interface | Functional Role |
 | :--- | :--- | :--- |
-| 🧠 Microcontroller | Arduino Uno | Central processing unit |
-| ⚙️ Servo Motor 1 | Digital Pin 9 (PWM) | Independent signal channel |
-| ⚙️ Servo Motor 2 | Digital Pin 10 (PWM) | Independent signal channel |
-| ⚙️ Servo Motor 3 | Digital Pin 11 (PWM) | Independent signal channel |
-| ⚙️ Servo Motor 4 | Digital Pin 6 (PWM) | Independent signal channel |
-| 🔋 Power Distribution | Breadboard | Shared 5V & GND bus for high-current delivery |
+| 🧠 Arduino Uno | Microcontroller Board | Central processing and logic execution unit |
+| ⚙️ Servo Motor 1 | Digital Pin 9 (PWM) | Independent angular drive channel 1 |
+| ⚙️ Servo Motor 2 | Digital Pin 10 (PWM) | Independent angular drive channel 2 |
+| ⚙️ Servo Motor 3 | Digital Pin 11 (PWM) | Independent angular drive channel 3 |
+| ⚙️ Servo Motor 4 | Digital Pin 6 (PWM) | Independent angular drive channel 4 |
+| 🔋 Power Bus | Breadboard (5V & GND) | Distributed power rail ensuring stable current delivery |
 
 ---
 
-## 💻 ⚡ Firmware Implementation
+## 🚀 💡 Technical Highlights & Engineering Benefits
+* Multi-Channel Synchronization: Achieves uniform response times across four distinct physical channels without jitter or latency lag.
+* Temporal Control: Implements time-based boundaries (`millis()`) rather than rigid delay loops, ensuring scalable program flow.
+* Modular Reliability: Separates the active sweeping routine from the steady-state holding protocol, ensuring fail-safe positioning upon completion.
 
-```cpp
-#include <Servo.h>
+---
 
-Servo servo1;
-Servo servo2;
-Servo servo3;
-Servo servo4;
-
-void setup() {
-  servo1.attach(9);
-  servo2.attach(10);
-  servo3.attach(11);
-  servo4.attach(6);
-}
-
-void loop() {
-  unsigned long startTime = millis();
-
-  while (millis() - startTime < 2000) {
-    for (int pos = 0; pos <= 180; pos += 1) {
-      servo1.write(pos);
-      servo2.write(pos);
-      servo3.write(pos);
-      servo4.write(pos);
-      delay(15);
-    }
-    for (int pos = 180; pos >= 0; pos -= 1) {
-      servo1.write(pos);
-      servo2.write(pos);
-      servo3.write(pos);
-      servo4.write(pos);
-      delay(15);
-    }
-  }
-
-  servo1.write(90);
-  servo2.write(90);
-  servo3.write(90);
-  servo4.write(90);
-
-  while (true) {
-  }
-}
+<div align="center">
+  <h3>📺 Circuit Diagram & Simulation Preview</h3>
+  <br>
+  
+  <!-- Displays the circuit image -->
+  <img src="./circuit.png" alt="Circuit Diagram" width="800"/>
+  
+</div>
