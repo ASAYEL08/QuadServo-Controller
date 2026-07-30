@@ -61,6 +61,6 @@ You can explore, test, and run the live circuit simulation directly in your brow
   <br>
   
   <!-- Displays the circuit image -->
-  <img src="./circuit.png" alt="Circuit Diagram" width="800"/>
+  <img src="./circut.png" alt="Circut Diagram" width="800"/>
   
 </div>
